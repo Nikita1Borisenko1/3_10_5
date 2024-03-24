@@ -13,30 +13,32 @@ namespace example_3_10_5
     {
         static void Main(string[] args)
         {
-            WriteLine("Игра угадайка");
-            Random random = new Random();
+            Write("Введите максимальное целое число диапазона: ");
+            int secretNumber = new Random().Next(Convert.ToInt32(ReadLine()));
 
-            int iiNumber = random.Next(1, 1000);
-            int count = 0;
-            int userNumber;
-
-            for (; ; )
+            while (true)
             {
-                Write("Введите число: ");
-                count++;
-                userNumber = Convert.ToInt32(Console.ReadLine());
-                if (userNumber < iiNumber)
+                WriteLine("Попробуйте угадать число (пустая строка - выход):");
+                string userInput = ReadLine();
+
+                if (string.IsNullOrEmpty(userInput))
                 {
-                    WriteLine("Введенное число меньше загаданного, попробуйте еще");
+                    WriteLine($"Было загадано число {secretNumber}");
+                    break;
                 }
-                else if (userNumber > iiNumber)
+
+                if (Convert.ToInt32(userInput) > secretNumber)
                 {
-                    WriteLine("Введенное число больше загаданного, попробуйте еще");
+                    WriteLine("Загаданное число меньше.\n");
+                } 
+                else if (Convert.ToInt32(userInput) < secretNumber)
+                {
+                    WriteLine("Загаданное число больше.\n");
                 }
                 else
                 {
-                    WriteLine($"Вы угадали! Число попыток: {count}");
-                    ReadKey();
+                    WriteLine("Число отгадано!");
+                    break;
                 }
             }
         }
